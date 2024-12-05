@@ -1,0 +1,30 @@
+name: Run Django Command
+
+on:
+  push:
+    branches:
+      - main  # или другая ветка, например, master
+  workflow_dispatch:  # позволяет вручную запускать workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # или другая ОС, если требуется
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # укажите нужную версию Python
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Установить зависимости
+
+      - name: Run Django command
+        run: |
+          python manage.py migrate  # Или другую команду Django, например:
+          # python manage.py runserver
